@@ -56,7 +56,8 @@ class PaymentApi {
     final uri = url.replace(queryParameters: params);
 
     final response = await http.get(uri, headers: {"Content-Type": "application/json"});
-
+    print('Response status peyment: ${response.statusCode}');
+    print('Response body payment: ${response.body}');
     if (response.statusCode == 200) {
       List<dynamic> paymentsJson = jsonDecode(response.body);
       return paymentsJson.map((json) => Payment.fromJson(json)).toList();

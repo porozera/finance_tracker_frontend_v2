@@ -30,15 +30,16 @@ class Account {
   factory Account.fromJson(Map<String, dynamic> data) => Account(
     id: data["id"],
     name: data["name"],
-    holderName: data["holderName"] ??"",
-    accountNumber: data["accountNumber"]??"",
+    holderName: data["holderName"] ?? "",
+    accountNumber: data["accountNumber"] ?? "",
     icon: IconData(data["icon"], fontFamily: 'MaterialIcons'),
     color: Color(data["color"]),
-    isDefault: data["isDefault"]==1?true:false,
-    income: data["income"],
-    expense: data["expense"],
-    balance: data["balance"],
+    isDefault: data["isDefault"] == 1 ? true : false,
+    income: double.tryParse(data["income"]?.toString() ?? "0.0"),
+    expense: double.tryParse(data["expense"]?.toString() ?? "0.0"),
+    balance: double.tryParse(data["balance"]?.toString() ?? "0.0"),
   );
+
 
   Map<String, dynamic> toJson() => {
     "id": id,

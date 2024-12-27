@@ -8,38 +8,36 @@ enum PaymentType {
   credit
 }
 class Payment {
-  int? id;
-  Account account;
-  Category category;
-  double amount;
-  PaymentType type;
-  DateTime datetime;
-  String title;
-  String description;
+  final int? id;
+  final String title;
+  final String description;
+  final Account account;
+  final Category category;
+  final double amount;
+  final PaymentType type;
+  final DateTime datetime;
 
   Payment({
-    this.id,
+    required this.id,
+    required this.title,
+    required this.description,
     required this.account,
     required this.category,
     required this.amount,
     required this.type,
     required this.datetime,
-    required this.title,
-    required this.description
   });
 
-
-  factory Payment.fromJson(Map<String, dynamic> data) {
+  factory Payment.fromJson(Map<String, dynamic> json) {
     return Payment(
-      id: data["id"],
-      title: data["title"] ??"",
-      description: data["description"]??"",
-      account: Account.fromJson(data["account"]),
-      category: Category.fromJson(data["category"]),
-      amount: data["amount"],
-      type: data["type"] == "CR" ? PaymentType.credit : PaymentType
-          .debit,
-      datetime: DateTime.parse(data["datetime"]),
+      id: json['id'],
+      title: json['title'],
+      description: json['description'],
+      account: Account.fromJson(json['account']),
+      category: Category.fromJson(json['category']),
+      amount: double.parse(json['amount']), // Konversi String ke double
+      type: json['type'] == "CR" ? PaymentType.credit : PaymentType.debit,
+      datetime: DateTime.parse(json['datetime']),
     );
   }
 

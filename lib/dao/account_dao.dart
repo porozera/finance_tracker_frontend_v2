@@ -35,6 +35,9 @@ class AccountApi {
     final url = Uri.parse('$BASE_URL/accounts${withSummery ? '?withSummery=true' : ''}');
     final response = await http.get(url);
 
+    print('Response status account: ${response.statusCode}');
+    print('Response body account: ${response.body}');
+
     if (response.statusCode == 200) {
       List<dynamic> accountsJson = jsonDecode(response.body);
       return accountsJson.map((json) => Account.fromJson(json)).toList();

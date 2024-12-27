@@ -73,31 +73,42 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  void _fetchTransactions() async {
-    List<Payment> trans = await _paymentApi.find(range: _range, category: _category, account:_account);
+  Future<void> _fetchTransactions() async {
+    List<Payment> trans = await _paymentApi.find(range: _range, category: _category, account: _account);
     double income = 0;
     double expense = 0;
-    for (var payment in trans) {
-      if(payment.type == PaymentType.credit) income += payment.amount;
-      if(payment.type == PaymentType.debit) expense += payment.amount;
-    }
 
-    //fetch accounts
-    List<Account> accounts = await _accountApi.find(withSummery: true);
+    for (var payment in trans) {
+      if (payment.type == PaymentType.credit) income += payment.amount;
+      if (payment.type == PaymentType.debit) expense += payment.amount;
+    }
 
     setState(() {
       _payments = trans;
       _income = income;
       _expense = expense;
+    });
+  }
+
+  Future<void> _fetchAccounts() async {
+    List<Account> accounts = await _accountApi.find(withSummery: true);
+    setState(() {
       _accounts = accounts;
     });
   }
+
+  void _fetchAllData() {
+    _fetchTransactions();
+    _fetchAccounts();
+  }
+
 
 
   @override
   void initState() {
     super.initState();
     _fetchTransactions();
+    _fetchAccounts();
 
     _accountEventListener = globalEvent.on("account_update", (data){
       debugPrint("accounts are changed");
@@ -199,7 +210,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   const Text.rich(
                                       TextSpan(
                                           children: [
-                                            //TextSpan(text: "▼", style: TextStyle(color: ThemeColors.success)),
+                                            TextSpan(text: "▼", style: TextStyle(color: ThemeColors.success)),
                                             TextSpan(text:"Income", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
                                           ]
                                       )
@@ -227,7 +238,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   const Text.rich(
                                       TextSpan(
                                           children: [
-                                            //TextSpan(text: "▲", style: TextStyle(color: ThemeColors.error)),
+                                            TextSpan(text: "▲", style: TextStyle(color: ThemeColors.error)),
                                             TextSpan(text:"Expense", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
                                           ]
                                       )
