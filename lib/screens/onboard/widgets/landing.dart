@@ -48,7 +48,6 @@ class LandingPage extends StatelessWidget{
                 ],
               ),
               const Expanded(child: SizedBox()),
-              const Text("*Since this application is currently in beta, be prepared for UI changes and unexpected behaviours."),
               const SizedBox(height: 20,),
               Container(
                 alignment: Alignment.bottomRight,

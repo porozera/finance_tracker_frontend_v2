@@ -17,6 +17,7 @@ class App extends StatelessWidget {
     return  BlocBuilder<AppCubit, AppState>(
         builder: (context, state){
           return MaterialApp(
+            debugShowCheckedModeBanner: false,
             title: 'Fintracker',
             theme: ThemeData(
                 useMaterial3: true,

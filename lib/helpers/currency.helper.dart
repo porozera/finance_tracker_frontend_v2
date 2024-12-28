@@ -4,10 +4,10 @@ class CurrencyHelper {
   static String format(
       double amount, {
         String? symbol = "₹",
-        String? name = "INR",
-        String? locale = "en_IN",
+        String? name = "IDR",
+        String? locale = "id_ID",
       }) {
-    return NumberFormat('$symbol##,##,##,###.####', locale).format(amount);
+    return NumberFormat('$symbol###,###,###,###.####', locale).format(amount);
   }
 }
 
