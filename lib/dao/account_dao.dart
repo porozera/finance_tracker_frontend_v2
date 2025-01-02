@@ -5,14 +5,13 @@ import 'package:http/http.dart' as http;
 
 import '../model/account.model.dart';
 
-const String BASE_URL = "http://10.0.2.2:8000/api";  // Replace with your API base URL
+const String BASE_URL = "http://10.0.2.2:8000/api";
 
 class AccountApi {
   // Create account
   Future<int> create(Account account) async {
     final url = Uri.parse('$BASE_URL/accounts');
 
-    // Log untuk memeriksa data yang akan dikirim
     print('Sending account data: ${jsonEncode(account.toJson())}');
 
     final response = await http.post(
@@ -22,10 +21,8 @@ class AccountApi {
     );
 
     if (response.statusCode == 201) {
-      // Jika berhasil, kembalikan ID dari respons
       return jsonDecode(response.body)['id'];
     } else {
-      // Jika gagal, lemparkan kesalahan yang lebih detail
       throw Exception('Failed to create account. Status code: ${response.statusCode}, Body: ${response.body}');
     }
   }

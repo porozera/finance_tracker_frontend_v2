@@ -6,7 +6,7 @@ import '../model/account.model.dart';
 import '../model/category.model.dart';
 import '../model/payment.model.dart';
 
-const String BASE_URL = "http://10.0.2.2:8000/api";  // Replace with your API base URL
+const String BASE_URL = "http://10.0.2.2:8000/api";
 
 class PaymentApi {
   // Create a new payment transaction
@@ -21,13 +21,12 @@ class PaymentApi {
     );
 
     if (response.statusCode == 201) {
-      return jsonDecode(response.body)['id'];  // Assuming the API returns the created payment's ID
+      return jsonDecode(response.body)['id'];
     } else {
       throw Exception('Failed to create account. Status code: ${response.statusCode}, Body: ${response.body}');
     }
   }
 
-  // Fetch payment transactions with optional filters
   Future<List<Payment>> find({
     DateTimeRange? range,
     PaymentType? type,
@@ -36,7 +35,6 @@ class PaymentApi {
   }) async {
     final url = Uri.parse('$BASE_URL/payments');
 
-    // Build query parameters
     Map<String, String> params = {};
     if (range != null) {
       params['start_date'] = DateFormat('yyyy-MM-dd').format(range.start);
@@ -52,7 +50,6 @@ class PaymentApi {
       params['category_id'] = category.id.toString();
     }
 
-    // Add query parameters to the URL
     final uri = url.replace(queryParameters: params);
 
     final response = await http.get(uri, headers: {"Content-Type": "application/json"});

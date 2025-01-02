@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../model/category.model.dart';
 
-const String BASE_URL = "http://10.0.2.2:8000/api";  // Replace with your API base URL
+const String BASE_URL = "http://10.0.2.2:8000/api";
 
 class CategoryApi {
   // Create a new category
@@ -17,7 +17,7 @@ class CategoryApi {
     );
 
     if (response.statusCode == 201) {
-      return jsonDecode(response.body)['id'];  // Assuming the API returns the created category's ID
+      return jsonDecode(response.body)['id'];  
     } else {
       throw Exception('Failed to create account. Status code: ${response.statusCode}, Body: ${response.body}');
     }
